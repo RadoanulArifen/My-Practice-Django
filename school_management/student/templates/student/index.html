@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <H1>welcome to student management system student section</H1>
+    <p>Name : {{name}}</p>
+    {% if age > 20 %}
+    <h2>You are real Arifen</h2>
+    {% else %}
+    <h2>You are not real Arifen</h2>
+    {% endif %}
+
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Subject Name</th>
+            <th>Marks</th>
+            <th>Grade</th>
+        </tr>
+        {% for subject in marks %}
+        <tr>
+            <td>{{ subject.id }}</td>
+            <td>{{ subject.subject }}</td>
+            <td>{{ subject.marks }}</td>
+            <td>
+                {% if subject.marks >= 90 %}
+                    A
+                {% elif subject.marks >= 80 %}
+                    B
+                {% elif subject.marks >= 70 %}
+                    C
+                {% else %}
+                    D
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</body>
+
+</html>
