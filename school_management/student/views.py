@@ -39,5 +39,5 @@ def profile(request):
         "marks": 87,
     },
     ]
-    
-    return render(request, 'student/index.html', {'marks': marks})
+
+    return render(request, 'student/index.html', {'marks': marks,"age":20,"Name":"Arifen", "list":["apple", "banana", "mango"]})
