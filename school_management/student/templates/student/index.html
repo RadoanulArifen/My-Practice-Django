@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'student/css/style.css' %}">
 </head>
 
 <body>
     <H1>welcome to student management system student section</H1>
+    <img src="{% static 'student/images/pic2.jpg' %}" alt="">
     <p>Name : {{name}}</p>
     {% if age > 20 %}
     <h2>You are real Arifen</h2>
