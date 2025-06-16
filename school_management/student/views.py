@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .import models
 # Create your views here.
 # def profile(request):
 #     return HttpResponse('I am in profile')
@@ -39,5 +40,11 @@ def profile(request):
         "marks": 87,
     },
     ]
+    student_data = models.Student.objects.all()
 
-    return render(request, 'student/index.html', {'marks': marks,"age":20,"Name":"Arifen", "list":["apple", "banana", "mango"]})
+    return render(request, 'student/index.html', {'marks': marks,"age":20,"Name":"Arifen", "list":["apple", "banana", "mango"], 'student_data' : student_data})
+
+def delete_student(request, id):
+    student = models.Student.objects.get(id=id)
+    student.delete()
+    return HttpResponse("Student delete successfully")
