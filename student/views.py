@@ -16,13 +16,14 @@ def home(request):
         phone  = request.POST.get('phone')
         password  = request.POST.get('password')
         checkbox  = request.POST.get('checkbox')
+        photo = request.FILES.get('photo')
         
         if checkbox == 'on':
             checkbox = True
         else:
             checkbox = False
         
-        student = models.Student(name=name , email=email , phone=phone , password=password,checkbox=checkbox) #student class er object create korlam
+        student = models.Student(name=name , email=email , phone=phone , password=password,checkbox=checkbox , photo=photo) #student class er object create korlam
         student.save() #satudent table a record create korlam
         return HttpResponse("Student object created successfully")
     
