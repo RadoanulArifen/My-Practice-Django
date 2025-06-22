@@ -1,6 +1,7 @@
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render , HttpResponse , redirect
 from .import models
 from . import forms
+from django.contrib import messages
 #There are three types of forms in Django
 '''
     1.HTML form
@@ -32,18 +33,37 @@ from . import forms
 #     return render(request,'student/index.html')
 #this is for model form
 
-def home(request):
+def create_student(request):
     
     if request.method == 'POST': #user post request korechy
         form = forms.StudentForm(request.POST , request.FILES) #user er post request capture korlam
         if form.is_valid(): #user in put validation korlam
             form.save() #user input save korlam
-            return HttpResponse("Student Object created successfully")
+            messages.add_message(request, messages.SUCCESS, 'Student Created Successfully.')
+            return redirect('home')
         
     else:
         form = forms.StudentForm()
-    return render(request,'student/index.html', {'form':form})
+    return render(request,'student/create_student.html', {'form':form})
 
-def student_list(request):
+def home(request):
     students = models.Student.objects.all()
     return render(request,'student/index.html', {'students':students})
+
+def update_student(request,id):
+    student = models.Student.objects.get(id=id)
+    form = forms.StudentForm(instance=student) #user er ager data diye fillup korlam
+    # form = forms.StudentForm()
+    if request.method == 'POST': #user post request korechy
+        form = forms.StudentForm(request.POST , request.FILES, instance=student) #user er post request capture korlam
+        if form.is_valid(): #user in put validation korlam
+            form.save() #user input save korlam
+            messages.add_message(request, messages.SUCCESS, 'Student updated Successfully.')
+            return redirect('home')
+    return render(request,'student/create_student.html', {'form':form, 'edit': True})
+
+def delete_student(request,id):
+    student = models.Student.objects.get(id=id) #id wala student k khujy pelam and object o pelam
+    student.delete() #oi student k delete korlam
+    messages.add_message(request, messages.SUCCESS, 'Student delete Successfully.')
+    return redirect('home') #success holy take home page a redirect korlam

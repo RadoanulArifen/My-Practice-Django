@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{%load crispy_forms_tags %}
+{% block title %} Create page{% endblock %}
+{% block content %}
+
+{% if edit %}
+<h1 class="py-3 container">Edit Student Data</h1>
+
+{% else %}
+<h1 class="py-3 container">Create New Student</h1>
+
+{% endif %}
+<!--card start-->
+
+
+<!--Card ends-->
+
+<!--new form-->
+<form class="container" method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{form | crispy}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}
