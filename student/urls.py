@@ -10,4 +10,6 @@ urlpatterns = [
     path('edit/<int:id>',views.updateStudentData.as_view(), name="update_student"), #class based view
     # path('delete/<int:id>',views.delete_student, name="delete_student"), #function based
     path('delete/<int:id>',views.DeleteStudentData.as_view(), name="delete_student"), #class based view
+    path('signup/',views.signup, name="signup"),
+    path('login/',views.user_login, name="user_login")
 ]

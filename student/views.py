@@ -4,6 +4,8 @@ from . import forms
 from django.contrib import messages
 from django.views.generic import ListView , UpdateView ,DeleteView ,CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login ,logout
 #There are three types of forms in Django
 '''
     1.HTML form
@@ -118,4 +120,34 @@ class DeleteStudentData(DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.add_message(request, messages.SUCCESS, 'Student delete Successfully.')
         return super().delete(request, *args, **kwargs) 
+
+def signup(request):
+    if request.method == 'POST': #user post request korechy
+        form = forms.SignUpForm(request.POST) #user er post request capture korlam
+        if form.is_valid(): #user in put validation korlam
+            form.save() #user input save korlam
+            messages.add_message(request, messages.SUCCESS, 'Account Created Successfully.')
+            return redirect('home')     
+    else:
+        form = forms.SignUpForm()
         
+    return render(request, 'student/auth_form.html' , {'form':form})
+    
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')  
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.add_message(request, messages.SUCCESS, 'Login Successful')
+                return redirect('home')
+            else:
+                messages.add_message(request, messages.ERROR, 'Invalid username or password')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'student/auth_form.html', {'form': form})
